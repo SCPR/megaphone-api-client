@@ -55,27 +55,12 @@ describe MegaphoneClient::Episode do
 
   describe "search" do
     before :each do
-      @megaphone = MegaphoneClient.new({ organization_id: "STUB_ORGANIZATION_ID" })
+      @megaphone = MegaphoneClient.new
       @episodes = @megaphone.episodes
     end
 
-    it "should merge in the configuration organization_id if none is given in options" do
-      VCR.use_cassette("search_result_01") do
-        response = @episodes.search
-        expect(WebMock).to have_requested(:get, "https://cms.megaphone.fm/api/search/episodes?organizationId=STUB_ORGANIZATION_ID").once
-      end
-    end
-
-    it "should stick to the organizationId if given in options" do
-      VCR.use_cassette("search_result_02") do
-        response = @episodes.search({ organizationId: "STUB_ORGANIZATION_FROM_OPTIONS" })
-        expect(WebMock).to have_requested(:get, "https://cms.megaphone.fm/api/search/episodes?organizationId=STUB_ORGANIZATION_FROM_OPTIONS").once
-        expect(WebMock).not_to have_requested(:get, "https://cms.megaphone.fm/api/search/episodes?organizationId=STUB_ORGANIZATION_ID")
-      end
-    end
-
     it "should only perform GET requests" do
-      request_uri = "https://cms.megaphone.fm/api/search/episodes?organizationId=STUB_ORGANIZATION_ID"
+      request_uri = "https://cms.megaphone.fm/api/search/episodes"
       VCR.use_cassette("search_result_01") do
         @episodes.search
         expect(WebMock).to have_requested(:get, request_uri)

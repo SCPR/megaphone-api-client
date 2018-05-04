@@ -43,8 +43,6 @@ module MegaphoneClient
       end
 
       # @return a struct (or array of structs) that represents the search results by episode
-      # @note If an organizationId wasn't given in options and there is an organization_id in config,
-      #   it merges the organization_id from config into the params object that will be passed into MegaphoneClient#connection
       # @see MegaphoneClient#connection
       # @example Search for an episode with externalId 'show_episode-12345'
       #   megaphone.episode.search({
@@ -53,12 +51,6 @@ module MegaphoneClient
       #   #=> A struct representing 'show_episode-12345'
 
       def search params={}
-        # If an organizationId wasn't given in params and there is an organization_id in config
-        if !params[:organizationId] && config.organization_id
-          # Merge the organization_id from config into the params object
-          params.merge!({ organizationId: config.organization_id })
-        end
-
         MegaphoneClient.connection({
           :url => "#{config.api_base_url}/search/episodes",
           :method => :get,

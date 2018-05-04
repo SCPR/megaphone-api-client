@@ -9,7 +9,7 @@ gem 'megaphone_client', github:"scpr/megaphone_client"
 ```
 
 ## Usage
-**Note:** Megaphone API props, such as `externalId`, is in camelCase instead of snake_case because Megaphone's API expects it when accessing their API. So when passing params or putting/posting a hash, use camelCase. When interfacing with the gem's API, use snake_case.
+**Note:** Megaphone API props, such as `externalId`, are in camelCase instead of snake_case because Megaphone's API expects it when accessing their API. So when passing params or putting/posting a hash, use camelCase. When interfacing with the gem's API, use snake_case.
 
 ### Configuration
 Configure your app to connect to Megaphone, either in an initializer or your environment files:
