@@ -64,6 +64,15 @@ megaphone.episodes.create({
 })
 ```
 
+### Deleting
+
+```ruby
+megaphone.episodes.delete({
+  podcast_id: '{podcast_id}',
+  episode_id: "{episode id}"
+})
+```
+
 ## Tests
 
 To run the tests:
