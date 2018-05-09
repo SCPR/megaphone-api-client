@@ -42,6 +42,28 @@ module MegaphoneClient
         })
       end
 
+      # @return a struct with a message that the episode was successfully/unsuccessfully deleted
+      # @note If neither a :podcast_id and :episode_id are given, it raises an error
+      # @see MegaphoneClient#connection
+      # @example Delete an episode
+      #   megaphone.episode.delete({
+      #     podcast_id: '12345',
+      #     episode_id: '56789'
+      #   })
+      #   #=> A struct with a property "success" of type "string"
+
+      def delete options={}
+        if !options[:podcast_id] || !options[:episode_id]
+          raise ArgumentError.new("Both podcast_id and episode_id options are required.")
+        end
+
+        MegaphoneClient.connection({
+          :url => "#{config.api_base_url}/networks/#{config.network_id}/podcasts/#{options[:podcast_id]}/episodes/#{options[:episode_id]}",
+          :method => :delete,
+          :body => options[:body] || {}
+        })
+      end
+
       # @return a struct (or array of structs) that represents the search results by episode
       # @see MegaphoneClient#connection
       # @example Search for an episode with externalId 'show_episode-12345'
