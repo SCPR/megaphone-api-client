@@ -30,47 +30,74 @@ megaphone = MegaphoneClient.new({
 megaphone.episodes.search({ externalId: obj_key })
 ```
 
-### Updating
-
-**Note:** the properties in `body` are written in camelCase because it's expected by the Megaphone API
+### Listing podcasts
 
 ```ruby
-megaphone.episodes.update({
-  podcast_id: "{podcast id}",
-  episode_id: "{episode id}",
-  body: {
-    preCount: 1,
-    postCount: 2,
-    insertionPoints: ["10.1", "15.23", "18"]
-  }
+megaphone.podcasts
+```
+
+### Creating a podcast
+
+```ruby
+megaphone.podcasts.create({
+  title: "{episode title}",
+  pubdate: "2020-06-01T14:54:02.690Z"
 })
 ```
 
-### Listing Podcasts
+### Creating an episode
 
 ```ruby
-megaphone.podcasts.list
-```
-
-### Creating
-
-```ruby
-megaphone.episodes.create({
-  podcast_id: '{podcast_id}',
-  body: {
-    title: "{episode title}",
-    pubdate: "2020-06-01T14:54:02.690Z"
-  }
+megaphone.podcast("{podcast_id}").episodes.create({
+  title: "{episode title}",
+  pubdate: "2020-06-01T14:54:02.690Z"
 })
 ```
 
-### Deleting
+### Getting a podcast
 
 ```ruby
-megaphone.episodes.delete({
-  podcast_id: '{podcast_id}',
-  episode_id: "{episode id}"
+megaphone.podcast("{podcast id}")
+```
+
+### Getting an episode
+
+```ruby
+megaphone.podcast("{podcast id}").episode("{episode id}")
+```
+
+### Updating a podcast
+
+**Note:** the properties in `update` are written in camelCase because it's expected by the Megaphone API
+
+```ruby
+megaphone.podcast("{podcast id}").update({
+  title: "New Title"
 })
+```
+
+### Updating an episode
+
+**Note:** the properties in `update` are written in camelCase because it's expected by the Megaphone API
+
+```ruby
+megaphone.podcast("{podcast id}").episode("{episode id}").update({
+  preCount: 1,
+  postCount: 2,
+  insertionPoints: ["10.1", "15.23", "18"]
+})
+```
+
+### Deleting a podcast
+
+```ruby
+megaphone.podcast("{podcast id}").delete
+```
+
+### Deleting an episode
+
+```ruby
+megaphone.podcast("{podcast id}").episode("{episode id}").delete
 ```
 
 ## Tests
