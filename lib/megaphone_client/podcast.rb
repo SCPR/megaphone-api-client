@@ -25,13 +25,13 @@ module MegaphoneClient
       MegaphoneClient::Episode.new(@id, episode_id)
     end
 
-    # @return a MegaphoneClient::Episode instance
-    # @note This is used to call a new Episode instance with a given podcast id
-    # @example Call a new instance of MegaphoneClient::Episode
-    #   megaphone.podcast("12345").episodes #=> #<MegaphoneClient::Episode @id=nil @podcast_id="{podcast_id}" >
+    # @return a MegaphoneClient::EpisodeCollection instance
+    # @note This is used to call a new Episodes instance with a given podcast id
+    # @example Call a new instance of MegaphoneClient::EpisodeCollection
+    #   megaphone.podcast("12345").episodes #=> #<MegaphoneClient::EpisodeCollection @podcast_id="{podcast_id}" >
 
     def episodes
-      MegaphoneClient::Episode.new(@id)
+      MegaphoneClient::EpisodeCollection.new(@id)
     end
 
     # @return a MegaphoneClient
@@ -41,19 +41,6 @@ module MegaphoneClient
 
     def config
       @config ||= MegaphoneClient
-    end
-
-    # @return an array of structs that represents a list of podcasts
-    # @note It needs to be initialized with a network id
-    # @see MegaphoneClient#connection
-    # @example Get a list of all podcasts
-    #   megaphone.podcasts.list #=> An array of structs representing a list of podcasts
-
-    def list options={}
-      MegaphoneClient.connection({
-        :url => "#{config.api_base_url}/networks/#{config.network_id}/podcasts",
-        :method => :get
-      })
     end
 
     # @return a struct that represents a podcast of a given podcast id
