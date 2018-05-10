@@ -88,7 +88,7 @@ module MegaphoneClient
     #   megaphone.episodes #=> new MegaphoneClient::Episode
 
     def episodes
-      self::Episode
+      self::Episode.new
     end
 
     # @return a new instance of MegaphoneClient::Podcast
@@ -101,7 +101,11 @@ module MegaphoneClient
     #   megaphone.episodes #=> new MegaphoneClient::Podcast
 
     def podcasts
-      self::Podcast
+      self::Podcast.new.list
+    end
+
+    def podcast(id=nil)
+      self::Podcast.new(id)
     end
   end
 end
