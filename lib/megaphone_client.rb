@@ -98,11 +98,20 @@ module MegaphoneClient
     #     organization_id: '5678',
     #     token: '910'
     #   })
-    #   megaphone.episodes #=> new MegaphoneClient::Podcast
+    #   megaphone.podcasts #=> new MegaphoneClient::Podcast
 
     def podcasts
       self::Podcast.new
     end
+
+    # @return a new instance of MegaphoneClient::Podcast
+    # @example Initialize MegaphoneClient into an instance
+    #   megaphone = MegaphoneClient.new({
+    #     network_id: '1234',
+    #     organization_id: '5678',
+    #     token: '910'
+    #   })
+    #   megaphone.podcast("12345") #=> new MegaphoneClient::Podcast with id 12345
 
     def podcast(id=nil)
       self::Podcast.new(id)

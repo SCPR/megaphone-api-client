@@ -7,7 +7,7 @@ module MegaphoneClient
   # @author Jay Arella
   class Episode
 
-    # @return a MegaphoneClient instance
+    # @return a MegaphoneClient::Episode instance
     # @note This is used to initialize the podcast id and episode id when creating a new Episode instance
     # @example Create a new instance of MegaphoneClient::Episode
     #   MegaphoneClient::Episode.new("{podcast_id}", "{episode_id}") #=> #<MegaphoneClient::Episode @id="{episode_id}", @podcast_id="{podcast_id}">
@@ -87,7 +87,7 @@ module MegaphoneClient
     # @return a struct that represents an episode of a given podcast id and episode id
     # @see MegaphoneClient#connection
     # @example Show an episode
-    #   megaphone.podcast("12345").episode("56789").delete
+    #   megaphone.podcast("12345").episode("56789").show
     #   #=> A struct representing episode 56789
 
     def show options={}
