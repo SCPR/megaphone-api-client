@@ -6,6 +6,12 @@ module MegaphoneClient
 
   # @author Jay Arella
   class Episode
+
+    # @return a MegaphoneClient instance
+    # @note This is used to initialize the podcast id and episode id when creating a new Episode instance
+    # @example Create a new instance of MegaphoneClient::Episode
+    #   MegaphoneClient::Episode.new("{podcast_id}", "{episode_id}") #=> #<MegaphoneClient::Episode @id="{episode_id}", @podcast_id="{podcast_id}">
+
     def initialize(podcast_id=nil, id=nil)
       @id = id
       @podcast_id = podcast_id
@@ -21,15 +27,12 @@ module MegaphoneClient
     end
 
     # @return a struct that represents the episode that was created
-    # @note If a @podcast_id, :body[:title], and :body[:pubdate] aren't given, it raises an error.
+    # @note If a @podcast_id, options[:title], and options[:pubdate] aren't given, it raises an error.
     # @see MegaphoneClient#connection
     # @example Create an episode
-    #   megaphone.episodes.create({
-    #     podcast_id: '12345',
-    #     body: {
-    #       title: "title",
-    #       pubdate: "2020-06-01T14:54:02.690Z"
-    #     }
+    #   megaphone.podcast("12345").episode.create({
+    #     title: "title",
+    #     pubdate: "2020-06-01T14:54:02.690Z"
     #   })
     #   #=> A struct representing episode '12345' with title, "title", and scheduled to publish at June 1st, 2020
 
@@ -49,10 +52,7 @@ module MegaphoneClient
     # @note If neither a @podcast_id and @episode_id are given, it raises an error
     # @see MegaphoneClient#connection
     # @example Delete an episode
-    #   megaphone.episode.delete({
-    #     podcast_id: '12345',
-    #     episode_id: '56789'
-    #   })
+    #   megaphone.podcast("12345").episode("56789").delete
     #   #=> A struct with a property "success" of type "string"
 
     def delete options={}
@@ -66,6 +66,13 @@ module MegaphoneClient
       })
     end
 
+    # @return an array of structs that represent a list of episodes for a given podcast
+    # @note If a @podcast_id is not given, it raises an error
+    # @see MegaphoneClient#connection
+    # @example List a podcast's episodes
+    #   megaphone.podcast("12345").episodes.list
+    #   #=> An array of structs representing a list of episodes for a given podcast
+
     def list options={}
       if !@podcast_id
         raise ArgumentError.new("The @podcast_id variable is required.")
@@ -76,6 +83,12 @@ module MegaphoneClient
         :method => :get
       })
     end
+
+    # @return a struct that represents an episode of a given podcast id and episode id
+    # @see MegaphoneClient#connection
+    # @example Show an episode
+    #   megaphone.podcast("12345").episode("56789").delete
+    #   #=> A struct representing episode 56789
 
     def show options={}
       if !@podcast_id || !@id
@@ -88,13 +101,13 @@ module MegaphoneClient
       })
     end
 
-    # @return a struct (or array of structs) that represents the search results by episode
+    # @return an array of structs that represents the search results by episode
     # @see MegaphoneClient#connection
     # @example Search for an episode with externalId 'show_episode-12345'
     #   megaphone.episode.search({
     #     externalId: 'show_episode-1245'
     #   })
-    #   #=> A struct representing 'show_episode-12345'
+    #   #=> An array of one struct representing 'show_episode-12345'
 
     def search params={}
       MegaphoneClient.connection({
@@ -108,10 +121,8 @@ module MegaphoneClient
     # @note If neither a @podcast_id and @episode_id are given, it raises an error
     # @see MegaphoneClient#connection
     # @example Update an episode's preCount
-    #   megaphone.episode.update({
-    #     podcast_id: '12345',
-    #     episode_id: '56789',
-    #     body: { preCount: 2 }
+    #   megaphone.podcast("12345").episode("56789").update({
+    #     preCount: 2
     #   })
     #   #=> A struct representing episode '56789' with preCount 2
 
