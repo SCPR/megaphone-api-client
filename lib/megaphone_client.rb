@@ -101,7 +101,7 @@ module MegaphoneClient
     #   megaphone.episodes #=> new MegaphoneClient::Podcast
 
     def podcasts
-      self::Podcast.new.list
+      self::Podcast.new
     end
 
     def podcast(id=nil)
