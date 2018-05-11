@@ -1,5 +1,7 @@
-require "megaphone_client/podcast"
+require "megaphone_client/episode_collection"
 require "megaphone_client/episode"
+require "megaphone_client/podcast_collection"
+require "megaphone_client/podcast"
 
 # @author Jay Arella
 module MegaphoneClient
@@ -37,7 +39,7 @@ module MegaphoneClient
     # @option options [String] :url Request url
     # @note This is a generalized REST method that is used by both the Episode and Podcast class.
     #   If it's successful, it returns a struct representing the data. If it fails, it raises a ConnectionError.
-    # @example Get a list of podcasts
+    # @example Get a list of podcasts with #connection
     #   megaphone.connection({
     #     method: :get,
     #     url: "https://cms.megaphone.fm/api/podcasts"
@@ -78,30 +80,28 @@ module MegaphoneClient
       }
     end
 
-    # @return a new instance of MegaphoneClient::Episode
-    # @example Initialize MegaphoneClient into an instance
-    #   megaphone = MegaphoneClient.new({
-    #     network_id: '1234',
-    #     organization_id: '5678',
-    #     token: '910'
-    #   })
-    #   megaphone.episodes #=> new MegaphoneClient::Episode
+    # @return a new instance of MegaphoneClient::EpisodeCollection
+    # @example Make a new Episodes instance
+    #   megaphone.episodes #=> new MegaphoneClient::EpisodeCollection
 
     def episodes
-      self::Episode
+      self::EpisodeCollection.new
     end
 
     # @return a new instance of MegaphoneClient::Podcast
-    # @example Initialize MegaphoneClient into an instance
-    #   megaphone = MegaphoneClient.new({
-    #     network_id: '1234',
-    #     organization_id: '5678',
-    #     token: '910'
-    #   })
-    #   megaphone.episodes #=> new MegaphoneClient::Podcast
+    # @example Make a new Podcast instance
+    #   megaphone.podcast("12345") #=> new MegaphoneClient::Podcast with id 12345
+
+    def podcast(id=nil)
+      self::Podcast.new(id)
+    end
+
+    # @return a new instance of MegaphoneCilent::PodcastCollection
+    # @example Make a new Podcasts instance
+    #   megaphone.podcasts #=> new MegaphoneClient::PodcastCollection
 
     def podcasts
-      self::Podcast
+      self::PodcastCollection.new
     end
   end
 end
